@@ -1,0 +1,32 @@
+name: Main Workflow
+on:
+  push:
+    branches:
+      - mana
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Include workflow1.yml
+      - name: Run Workflow 1
+        uses: actions/checkout@v2
+        with:
+          repository: ManasaBhat4/workflow
+          path: .github/workflows/workflowm.yml
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Include workflow2.yml
+      - name: Run Workflow 2
+        uses: actions/checkout@v2
+        with:
+          repository: ManasaBhat4/workflow
+          path: .github/workflows/workflowma.yml
