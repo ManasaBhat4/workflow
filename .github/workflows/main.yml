@@ -5,28 +5,36 @@ on:
       - mana
 
 jobs:
-  job1:
+  terraform_apply:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Include workflow1.yml
-      - name: Run Workflow 1
+      # Include workflow1.yml (Terraform apply)
+      - name: Run Terraform Apply
         uses: actions/checkout@v2
         with:
           repository: ManasaBhat4/workflow
-          path: .github/workflow/workflowm.yml
+          path: .github/workflows/workflowm.yml
 
-  job2:
+  delay_job:
     runs-on: ubuntu-latest
+    needs: terraform_apply
+    steps:
+      - name: Wait for 5 minutes
+        run: sleep 300
+
+  terraform_destroy:
+    runs-on: ubuntu-latest
+    needs: delay_job
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Include workflow2.yml
-      - name: Run Workflow 2
+      # Include workflow2.yml (Terraform destroy)
+      - name: Run Terraform Destroy
         uses: actions/checkout@v2
         with:
-          repository: ManasaBhat4/workflow
-          path: .github/workflow/workflowma.yml
+          repository: ManasaBhat4/workflowm
+          path: .github/workflows/workflowma.yml
