@@ -96,7 +96,7 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Terraform Init
-        run: terraform init -reconfigure -backend=false -input=false -lock=false -force-copy
+        run: terraform init 
         working-directory: ./workflow
 
   terraform_plan:
