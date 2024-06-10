@@ -13,12 +13,10 @@ jobs:
 
       # Include workflow1.yml (Terraform apply)
       - name: Run Terraform Apply
-        run: |
-          cd .github/workflow/workflowm
-          # Assuming you have Terraform installed and configured
-          terraform init
-          terraform apply -auto-approve
-        working-directory: .github/workflow/workflowm
+        uses: actions/checkout@v2
+        with:
+          repository: ManasaBhat4/workflow
+          path: .github/workflows/workflowm.yml
 
   delay_job:
     runs-on: ubuntu-latest
@@ -36,9 +34,7 @@ jobs:
 
       # Include workflow2.yml (Terraform destroy)
       - name: Run Terraform Destroy
-        run: |
-          cd .github/workflow/workflowma
-          # Assuming you have Terraform installed and configured
-          terraform init
-          terraform destroy -auto-approve
-        working-directory: .github/workflow/workflowma
+        uses: actions/checkout@v2
+        with:
+          repository: ManasaBhat4/workflow
+          path: .github/workflows/workflowma.yml
