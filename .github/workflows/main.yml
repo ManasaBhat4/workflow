@@ -30,29 +30,33 @@ jobs:
           path: ./main.tf
          
 
-  # terraform_plan:
-  #   name: Terraform Plan
-  #   runs-on: ubuntu-latest
-  #   needs: [terraform_init]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2 
+  terraform_plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    needs: [terraform_init]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2 
 
-  #     - name: Terraform Plan
-  #       run: terraform plan
-  #       working-directory: ./workflow
+      - name: Terraform Plan
+        run: terraform plan
+        with:
+          repository: ManasaBhat4/workflow
+          path: ./main.tf
 
-  # terraform_apply:
-  #   name: Terraform Apply
-  #   runs-on: ubuntu-latest
-  #   needs: [terraform_plan]
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  terraform_apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    needs: [terraform_plan]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Terraform Apply
-  #       run: terraform apply -auto-approve
-  #       working-directory: ./workflow
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        with:
+          repository: ManasaBhat4/workflow
+          path: ./main.tf
 
   # # terraform_destroy:
   # #   name: Terraform Destroy
