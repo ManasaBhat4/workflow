@@ -45,7 +45,7 @@ jobs:
         run: |
           cd workflow
           terraform plan
-        working-directory: ./workflow
+        working-directory: ${{ github.workspace }}/workflow
 
   terraform_apply:
     name: Terraform Apply
@@ -62,4 +62,4 @@ jobs:
         run: |
           cd workflow
           terraform apply -auto-approve
-        working-directory: ./workflow
+        working-directory: ${{ github.workspace }}/workflow
