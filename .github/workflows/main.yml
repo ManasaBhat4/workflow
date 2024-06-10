@@ -20,11 +20,11 @@ jobs:
     name: Terraform Init
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code and Terraform configuration
+      - name: Checkout Terraform configuration
         uses: actions/checkout@v2
         with:
           repository: ManasaBhat4/workflow
-          path: workflow/main.tf  
+          path: workflow
 
       - name: Terraform Init
         run: terraform init
@@ -35,14 +35,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: [terraform_init]
     steps:
-      - name: Checkout code and Terraform configuration
+      - name: Checkout Terraform configuration
         uses: actions/checkout@v2
         with:
           repository: ManasaBhat4/workflow
-          path: workflow/provider.tf 
+          path: workflow
 
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+          cd workflow
+          terraform plan
         working-directory: workflow
 
   terraform_apply:
@@ -50,12 +52,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [terraform_plan]
     steps:
-      - name: Checkout code and Terraform configuration
+      - name: Checkout Terraform configuration
         uses: actions/checkout@v2
         with:
           repository: ManasaBhat4/workflow
-          path: workflow/main.tf
+          path: workflow
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: |
+          cd workflow
+          terraform apply -auto-approve
         working-directory: workflow
