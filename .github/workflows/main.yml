@@ -91,7 +91,7 @@ jobs:
           path: workflow
 
       - name: Terraform Init
-        run: run: terraform init -reconfigure -backend=false -input=false -lock=false -force-copy
+        run: terraform init -reconfigure -backend=false -input=false -lock=false -force-copy
         working-directory: ./workflow
 
   terraform_plan:
