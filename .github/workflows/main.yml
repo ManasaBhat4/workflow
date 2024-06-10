@@ -40,10 +40,7 @@ jobs:
         with:
           repository: ManasaBhat4/workflow
           path: workflow/main.tf 
-          
-      - name: Terraform Plan
-        run: terraform plan
-        working-directory: workflow
+      
 
   terraform_apply:
     name: Terraform Apply
