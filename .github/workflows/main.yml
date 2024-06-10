@@ -1,3 +1,67 @@
+# name: Main Workflow
+# on:
+#   push:
+#     branches:
+#       - mana
+
+# jobs:
+#   configure_aws_credentials:
+#     name: Configure AWS Credentials
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v2
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: us-east-2
+
+#   terraform_init:
+#     name: Terraform Init
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Terraform configuration
+#         uses: actions/checkout@v2
+#         with:
+#           repository: ManasaBhat4/workflow
+#           path: workflow
+
+#       - name: Terraform Init
+#         run: terraform init
+#         working-directory: ./workflow
+
+#   terraform_plan:
+#     name: Terraform Plan
+#     runs-on: ubuntu-latest
+#     needs: [terraform_init]
+#     steps:
+#       - name: Checkout Terraform configuration
+#         uses: actions/checkout@v2
+#         with:
+#           repository: ManasaBhat4/workflow
+#           path: main.tf
+
+      
+  # terraform_apply:
+  #   name: Terraform Apply
+  #   runs-on: ubuntu-latest
+  #   needs: [terraform_plan]
+  #   steps:
+  #     - name: Checkout Terraform configuration
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: ManasaBhat4/workflow
+  #         path: workflow
+
+  #     - name: Terraform Apply
+  #       run: |
+  #         cd workflow
+  #         terraform apply -auto-approve
+  #       working-directory: ${{ github.workspace }}/workflow
+
+
+
+
 name: Main Workflow
 on:
   push:
@@ -30,8 +94,8 @@ jobs:
         run: terraform init
         working-directory: ./workflow
 
-  terraform_plan:
-    name: Terraform Plan
+  terraform_apply:
+    name: Terraform Apply
     runs-on: ubuntu-latest
     needs: [terraform_init]
     steps:
@@ -39,22 +103,28 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ManasaBhat4/workflow
-          path: main.tf
+          path: workflow
 
-      
-  # terraform_apply:
-  #   name: Terraform Apply
-  #   runs-on: ubuntu-latest
-  #   needs: [terraform_plan]
-  #   steps:
-  #     - name: Checkout Terraform configuration
-  #       uses: actions/checkout@v2
-  #       with:
-  #         repository: ManasaBhat4/workflow
-  #         path: workflow
+      - name: Terraform Apply
+        run: |
+          cd workflow
+          terraform apply -auto-approve
+        working-directory: ./workflow
 
-  #     - name: Terraform Apply
-  #       run: |
-  #         cd workflow
-  #         terraform apply -auto-approve
-  #       working-directory: ${{ github.workspace }}/workflow
+  terraform_destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+    needs: [terraform_apply]
+    steps:
+      - name: Checkout Terraform configuration
+        uses: actions/checkout@v2
+        with:
+          repository: ManasaBhat4/workflow
+          path: workflow
+
+      - name: Terraform Destroy
+        run: |
+          cd workflow
+          terraform destroy -auto-approve
+        working-directory: ./workflow
+
