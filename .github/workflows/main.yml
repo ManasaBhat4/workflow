@@ -90,12 +90,17 @@ jobs:
           repository: ManasaBhat4/workflow
           path: workflow
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
       - name: Terraform Init
         run: terraform init -reconfigure -backend=false -input=false -lock=false -force-copy
         working-directory: ./workflow
 
   terraform_plan:
-    name: Terraform Apply
+    name: Terraform Plan
     runs-on: ubuntu-latest
     needs: [terraform_init]
     steps:
