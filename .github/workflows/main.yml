@@ -40,7 +40,10 @@ jobs:
         with:
           repository: ManasaBhat4/workflow
           path: workflow/main.tf 
-      
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: workflow
 
   terraform_apply:
     name: Terraform Apply
@@ -53,16 +56,6 @@ jobs:
           repository: ManasaBhat4/workflow
           path: workflow/main.tf
 
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve
-      #   working-directory: workflow
-
-  # Uncomment and customize the terraform_destroy job if needed
-  # terraform_destroy:
-  #   name: Terraform Destroy
-  #   runs-on: ubuntu-latest
-  #   needs: [terraform_apply]
-  #   steps:
-  #     - name: Terraform Destroy
-  #       run: terraform destroy -auto-approve
-  #       working-directory: workflow
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: workflow
