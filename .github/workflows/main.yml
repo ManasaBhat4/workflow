@@ -23,35 +23,42 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./main.tf
+
   terraform_plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
+    needs: [terraform_init]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2 
 
-  # Terraform Apply section is commented out
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./main.tf
+
   terraform_apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
+    needs: [terraform_plan]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-  # delay_job:
-  #   name: Delay Job
-  #   runs-on: ubuntu-latest
-  #   needs: terraform_plan
-  #   steps:
-  #     - name: Wait for 1 minute
-  #       run: sleep 60
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: ./main.tf
 
   # terraform_destroy:
   #   name: Terraform Destroy
   #   runs-on: ubuntu-latest
-  #   needs: delay_job
+  #   needs: [terraform_apply]
   #   steps:
   #     - name: Checkout code
   #       uses: actions/checkout@v2
 
-  
+  #     - name: Terraform Destroy
+  #       run: terraform destroy -auto-approve
+  #       working-directory: ./path/to/terraform/directory
