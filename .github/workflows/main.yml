@@ -89,10 +89,6 @@ jobs:
         with:
           repository: ManasaBhat4/workflow
           path: workflow
-
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
           terraform_version: 1.0.0
 
       - name: Terraform Init
