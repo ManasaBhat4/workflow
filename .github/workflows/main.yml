@@ -91,10 +91,10 @@ jobs:
           path: workflow
 
       - name: Terraform Init
-        run: terraform init
+        run: run: terraform init -reconfigure -backend=false -input=false -lock=false -force-copy
         working-directory: ./workflow
 
-  terraform_apply:
+  terraform_plan:
     name: Terraform Apply
     runs-on: ubuntu-latest
     needs: [terraform_init]
@@ -106,7 +106,7 @@ jobs:
           path: workflow
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform plan
         working-directory: ./workflow
 
   # terraform_destroy:
