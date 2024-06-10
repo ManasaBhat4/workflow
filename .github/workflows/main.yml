@@ -41,6 +41,11 @@ jobs:
           repository: ManasaBhat4/workflow
           path: main.tf
 
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./workflow    
+
+
       
   # terraform_apply:
   #   name: Terraform Apply
