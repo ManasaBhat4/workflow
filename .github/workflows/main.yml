@@ -1,5 +1,19 @@
 name: Main Workflow
 on:
+  workflow_dispatch:
+  input:
+    branch:
+      description: 'Branch to deploy'
+      required: true
+      default: 'mana'
+    environment:
+      description: 'Environment to deploy'
+      required: true
+      default: 'dev'
+    action:
+      description: 'Action to perform'
+      required: true
+      default: 'deploy'
   push:
     branches:
       - mana
